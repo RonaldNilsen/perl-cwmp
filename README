@@ -1,0 +1,57 @@
+perl-cwmp - Perl ACS server implementing CWMP protocol to manage CPE clients
+
+Idea here is to implement simpliest possible TR-069 server which can talk to vendor's
+CPE and support various quirks (mostly protocol violations) found in implementations.
+
+
+This implementation follows specification:
+
+CPE WAN Management Protocol v1.1 
+TR-069 Issue 1 Amendment 2
+
+http://www.broadband-forum.org/technical/download/TR-069_Amendment-2.pdf
+
+
+Currently implemented:
+
++ 3.4.1 Encoding SOAP over HTTP
++ 3.4.2 Transaction Sessions
+- 3.4.3 File Transfers
+- 3.4.4 Authentication
+- 3.4.5 Digest Authentication
++ 3.4.6 Additional HTTP Requirements
+
+
+INSTALLATION
+
+Idea is to be as lightweight as possible, but some perl modules might be installed
+directly from CPAN
+
+  $ git clone git://github.com/dpavlin/perl-cwmp.git
+  $ cd perl-cwmp
+
+  $ sudo bin/install-debian.sh
+
+  $ perl Makefile.PL
+  $ make
+
+will check for dependencies and install them if necesarry
+
+
+USING ACS SERVER
+
+  $ ./bin/acs.pl --debug
+
+This will start server with debug output. You may repeat --debug to increase debug level.
+
+Sever will listen on *:3333, so now you can configure your CPE to connect to it.
+
+When CPE first connects, ACS server will issue GetParameterNames untill it discovers
+whole hierarchy and which parameters are writable.
+
+After that, it will issue GetparameterValues requests, 16 in one batch to preserve
+resources on CPE, until it reads all values present on CPE.
+
+This will create file yaml/CPE_ID.yml with all parameters information from given CPE.
+
+

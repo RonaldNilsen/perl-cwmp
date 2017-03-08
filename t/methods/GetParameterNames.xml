@@ -1,0 +1,14 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               xmlns:cwmp="urn:dslforum-org:cwmp-1-0">
+  <soap:Header>
+    <cwmp:ID soap:mustUnderstand="1">42</cwmp:ID>
+    <cwmp:NoMoreRequests>0</cwmp:NoMoreRequests>
+  </soap:Header>
+  <soap:Body>
+    <cwmp:GetParameterNames>
+      <ParameterPath>InternetGatewayDevice.DeviceInfo.SerialNumber</ParameterPath>
+      <NextLevel>0</NextLevel>
+    </cwmp:GetParameterNames>
+  </soap:Body>
+</soap:Envelope>
